@@ -25,6 +25,10 @@ public class SessionDao {
     private String url;
     @Value("${jdbc.table}")
     private String table;
+    @Value("${jdbc.user}")
+    private String user;
+    @Value("${jdbc.pass}")
+    private String pass;
     private static final int TAILLE_FILE = 100;
     private final String PUT;
     private final String DELETE;
@@ -34,7 +38,11 @@ public class SessionDao {
 
     private final Logger logger;
 
-    public SessionDao() throws SQLException {
+    @Autowired
+    public SessionDao(@Value("${jdbc.url}") String url, @Value("${jdbc.table}") String table) throws SQLException {
+
+        this.url=url;
+        this.table=table;
 
         logger = LoggerFactory.getLogger(this.getClass());
         file = new ArrayBlockingQueue<>(TAILLE_FILE);
@@ -45,9 +53,15 @@ public class SessionDao {
         EXPIRE = "DELETE FROM " + table
                 + " WHERE expiretime <= ?";
 
-        for (int i = 0; i < TAILLE_FILE; i++) {
-            file.add(DriverManager.getConnection(url));
+        try{
+            for (int i = 0; i < TAILLE_FILE; i++) {
+                file.add(DriverManager.getConnection("jdbc:mysql://" + url, user, pass));
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
+
+
 
         ScheduledThreadPoolExecutor expiredRemover = new ScheduledThreadPoolExecutor(1);
         expiredRemover.scheduleAtFixedRate(new Runnable() {
@@ -95,6 +109,23 @@ public class SessionDao {
 
     public void close(){
 
+    }
+
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getTable() {
+        return table;
+    }
+
+    public void setTable(String table) {
+        this.table = table;
     }
 
 

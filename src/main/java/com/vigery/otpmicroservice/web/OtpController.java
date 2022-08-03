@@ -23,27 +23,31 @@ public class OtpController {
 
     private static final Logger logger = LoggerFactory.getLogger(OtpController.class);
 
+    @Value("${jdbc.url}")
+    private String url;
+
     @Autowired
     private SessionDao sessionRepository;
+
     @Autowired
     private EmailService emailService;
     @Autowired
     private TokenService tokenService;
 
     @Value("${http.port}")
-    private int port;
+    private String port;
     @Value("${http.url}")
     private String httpUrl;
     @Value("${smtp.ip}")
     private String smtpIp;
     @Value("${smtp.port}")
-    private int smtpPort;
-    @Value("${smtp.ttl}")
-    private int smtpTtl;
-    @Value("${smtp.username}")
-    private int smtpUsername;
+    private String smtpPort;
+    @Value("${smtp.tls}")
+    private String smtpTls;
+    @Value("${smtp.user}")
+    private String smtpUsername;
     @Value("${smtp.password}")
-    private int smtpPassword;
+    private String smtpPassword;
 
     @GetMapping(value="/")
     public void isRunning(){ }

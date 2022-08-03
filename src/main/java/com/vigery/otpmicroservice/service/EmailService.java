@@ -16,9 +16,9 @@ public class EmailService {
     @Value("${smtp.ip}")
     private String ip;
     @Value("${smtp.port}")
-    private int port;
+    private String port;
     @Value("${smtp.tls}")
-    private boolean tls;
+    private Boolean tls;
     @Value("${smtp.user}")
     private String user;
     @Value("${smtp.password}")
