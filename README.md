@@ -1,3 +1,4 @@
+Usage of: Java, Spring boot
 # otp-microservice
 
 Microservice managing One Time Passwords. It creates and validates otp via email.
