@@ -32,3 +32,9 @@ Returns 200 if the microservice is working
 
 It validates the token linked to the session id and returns 200 if everything works fine.
 
+
+
+TO-DO:
+
+- add the implementation of close() method in Dao.
+
